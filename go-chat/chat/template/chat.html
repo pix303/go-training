@@ -6,7 +6,6 @@
     <title>Chat</title>
     <script>
       function init() {
-        console.log("init");
         let listEl = document.getElementById("messages");
         let msgBox = document.getElementById("msgBox");
         let chatForm = document.getElementById("chatbox");
@@ -18,7 +17,6 @@
 
         socket.onmessage = (e) => {
           let liEl = document.createElement("li");
-          console.log(e.data);
           liEl.textContent = e.data;
           listEl.appendChild(liEl);
         };
