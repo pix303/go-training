@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+  <meta content="utf-8" http-equiv="encoding" />
+  <head>
+    <title>Chat</title>
+    <script>
+      function init() {
+        console.log("init");
+        let listEl = document.getElementById("messages");
+        let msgBox = document.getElementById("msgBox");
+        let chatForm = document.getElementById("chatbox");
+
+        var socket = new WebSocket("ws://localhost:8080/room");
+        socket.onclose = () => {
+          console.log("connection with socket is close");
+        };
+
+        socket.onmessage = (e) => {
+          let liEl = document.createElement("li");
+          console.log(e.data);
+          liEl.textContent = e.data;
+          listEl.appendChild(liEl);
+        };
+
+        chatForm.onsubmit = (e) => {
+          e.preventDefault();
+          socket.send(msgBox.value);
+          return false;
+        };
+      }
+    </script>
+  </head>
+  <body onload="init()">
+    <form id="chatbox">
+      <textarea name="" id="msgBox" cols="30" rows="10"></textarea>
+      <input type="submit" value="Chat" />
+    </form>
+    <ul id="messages"></ul>
+  </body>
+</html>
