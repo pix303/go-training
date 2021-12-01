@@ -30,7 +30,6 @@ func (c *client) read() {
 func (c *client) write() {
 	for msg := range c.send {
 		if len(msg) > 0 {
-			room.Tracker.Trace("sending", string(msg))
 			if err := c.socket.WriteMessage(websocket.TextMessage, msg); err != nil {
 				break
 			}

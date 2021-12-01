@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
 
 	"github.com/gorilla/websocket"
 	"github.com/pix303/go-training/go-chat/trace"
@@ -40,7 +39,7 @@ func NewRoom() *room {
 		join:    make(chan *client),
 		leave:   make(chan *client),
 		clients: make(map[*client]bool),
-		Tracker: trace.New(os.Stdout),
+		Tracker: trace.Off(),
 	}
 }
 
