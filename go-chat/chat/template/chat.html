@@ -10,7 +10,7 @@
         let msgBox = document.getElementById("msgBox");
         let chatForm = document.getElementById("chatbox");
 
-        var socket = new WebSocket("ws://localhost:8080/room");
+        var socket = new WebSocket("ws://{{.Host}}/room");
         socket.onclose = () => {
           console.log("connection with socket is close");
         };

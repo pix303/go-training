@@ -1,11 +1,15 @@
 package main
 
 import (
+	"flag"
 	"log"
 	"net/http"
+	"os"
 	"path/filepath"
 	"sync"
 	"text/template"
+
+	"github.com/pix303/go-training/go-chat/trace"
 )
 
 // templateHandler is a struct for handle chat request
@@ -23,19 +27,22 @@ func (t *templateHandler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	t.once.Do(func() {
 		t.templ = *template.Must(template.ParseFiles(filepath.Join("chat/template", t.filename)))
 	})
-	t.templ.Execute(rw, nil)
-
+	t.templ.Execute(rw, r)
 }
 
 func main() {
-	log.Println("Start up a chat server")
+
+	trk := trace.New(os.Stdout)
+
+	var hostParam = flag.String("host", ":8080", "The address of application server")
+	flag.Parse()
 
 	// example of inline html response
 	http.HandleFunc("/", func(rw http.ResponseWriter, r *http.Request) {
 		rw.Write([]byte(`<html>
 		<head>
 		Welcome in chat
-		</head>
+		</head>s
 		<body>
 		<h2>Hi hello! chat with me</h2>
 		<p>bla bla bla...</p>
@@ -52,7 +59,8 @@ func main() {
 	go r.run()
 
 	// start up server
-	if err := http.ListenAndServe(":8080", nil); err != nil {
+	trk.Trace("Chat server is running")
+	if err := http.ListenAndServe(*hostParam, nil); err != nil {
 		log.Fatal("Error on server", err)
 	}
 }

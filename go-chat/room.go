@@ -1,24 +1,30 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/websocket"
+	"github.com/pix303/go-training/go-chat/trace"
 )
 
-// room is struct that rapprest aggregator for chatting clients
+// room is struct that rappresent a group of chatting clients
 type room struct {
 	// chan to broadcast room messages
 	forward chan []byte
 	// chan to manage client add in room
 	join chan *client
-	// chan to manage client leave in room
+	// chan to manage client remove from room
 	leave chan *client
 	// list to track all client in room
 	clients map[*client]bool
+	// track activity
+	Tracker trace.Tracer
 }
 
+// define const for socket buffer
 const (
 	socketBufferSize  = 1024
 	messageBufferSize = 256
@@ -34,6 +40,7 @@ func NewRoom() *room {
 		join:    make(chan *client),
 		leave:   make(chan *client),
 		clients: make(map[*client]bool),
+		Tracker: trace.New(os.Stdout),
 	}
 }
 
@@ -75,18 +82,22 @@ func (r *room) run() {
 		select {
 		case joiningClient := <-r.join:
 			r.clients[joiningClient] = true
+			r.Tracker.Trace("New client joint")
 		case leavingClient := <-r.leave:
 			delete(r.clients, leavingClient)
 			close(leavingClient.send)
+			r.Tracker.Trace("Client left")
 		case msg := <-r.forward:
 			for client := range r.clients {
 				select {
 				//send message
 				case client.send <- msg:
+					r.Tracker.Trace(fmt.Sprintf("Message sent to client: %s", msg))
 				default:
 					//failed to send because of client is closed
 					delete(r.clients, client)
 					close(client.send)
+					r.Tracker.Trace("Message fail to send to client. Client removed from room")
 				}
 			}
 		}
