@@ -2,6 +2,11 @@ package main
 
 import "fmt"
 
+type Person struct{
+	Name string
+	Age int
+}
+
 func main() {
 	// set a variable with name, type and value
 	var num int = 5
@@ -36,7 +41,15 @@ func main() {
 	*p = 45
 	fmt.Println("value of pointer and value after setting value by pointer",p,*p,v)
 
-
+	fmt.Println("")
+	fmt.Println("---Declare struct and show same syntax using value or pointer of struct")
+	person := Person{"James",22}
+	fmt.Println("Init person",person.Name,person.Age)
+	personPointer := &person
+	fmt.Printf("Person pointer %p - %v\n",personPointer,personPointer)
+	fmt.Println("Init person and see by pointer",*&personPointer.Name,*&personPointer.Age)
+	personPointer.Age = 34
+	fmt.Println("Change age by pointer without prefix *",person.Name,person.Age)
 }
 
 // Calc square value of a number
