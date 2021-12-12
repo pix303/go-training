@@ -1,0 +1,10 @@
+mode: set
+github.com/pix303/go-training/pix-tracker/track/tracker.go:10.38,12.2 1 1
+github.com/pix303/go-training/pix-tracker/track/tracker.go:27.53,29.17 2 1
+github.com/pix303/go-training/pix-tracker/track/tracker.go:33.2,34.22 2 1
+github.com/pix303/go-training/pix-tracker/track/tracker.go:37.2,38.14 2 1
+github.com/pix303/go-training/pix-tracker/track/tracker.go:41.2,42.12 2 1
+github.com/pix303/go-training/pix-tracker/track/tracker.go:29.17,31.3 1 1
+github.com/pix303/go-training/pix-tracker/track/tracker.go:34.22,36.3 1 1
+github.com/pix303/go-training/pix-tracker/track/tracker.go:38.14,40.3 1 0
+github.com/pix303/go-training/pix-tracker/track/tracker.go:45.43,49.2 1 1
