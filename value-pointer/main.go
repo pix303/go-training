@@ -26,6 +26,17 @@ func main() {
 	f.DecreasePointer()
 	fmt.Println("Current couter (pointer)", f.counter)
 
+	fmt.Println("")
+	fmt.Println("---Declare variable as pointer and var as value")
+	var p *int
+	fmt.Println("value of pointer",p)
+	var v int = 23
+	p = &v
+	fmt.Println("value of pointer after assignation of value",p,*p,v)
+	*p = 45
+	fmt.Println("value of pointer and value after setting value by pointer",p,*p,v)
+
+
 }
 
 // Calc square value of a number
