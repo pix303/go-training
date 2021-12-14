@@ -1,24 +1,23 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
+	"os"
+
+	"github.com/pix303/go-training/pix-tracker/track"
 )
 
 func main() {
-	var num int = 5
-	fmt.Println(num, &num)
-	squareVal(num)
-	fmt.Println(num, &num)
-	squareAddr(&num)
-	fmt.Println(num, &num)
-}
+	trk := track.NewTracker(os.Stdout)
+	trk.Track("First message")
+	trk.Track("Second message")
 
-func squareVal(v int) {
-	v = v * v
-	fmt.Println(v, &v)
-}
-
-func squareAddr(p *int) {
-	*p = *p * *p
-	fmt.Println("--->", p, *p)
+	var trackData string
+	buffer := bytes.NewBufferString(trackData)
+	trk2 := track.NewTracker(buffer)
+	for i := 0; i < 10; i++{
+		trk2.Track(fmt.Sprintf("track number %d",i) )
+	}
+	fmt.Println(buffer.String())
 }
