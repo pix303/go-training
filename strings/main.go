@@ -44,4 +44,23 @@ func main() {
 
 	fmt.Println("--------------------------------------")
 
+	fmt.Println("----Insert a string into a string ----------------------------")
+	origin := "ABCDEFGHI"
+	sb := []byte(origin)
+	fmt.Printf("Len and cap of []byte init by string var: %d - %d \n", len(sb), cap(sb))
+
+	sbx := []byte("ABCDEFGHI")
+	fmt.Printf("Len and cap of []byte init by literal string : %d - %d \n", len(sbx), cap(sbx))
+
+	toAdd := "x😀z"
+	i := 5
+	sb = append(sb[:i+len(toAdd)], sb[i:]...)
+	fmt.Println(string(sb))
+	fmt.Println(len(toAdd))
+	for t := i; t < len(toAdd)+i; t++ {
+		sb[t] = toAdd[t-i]
+	}
+	fmt.Println(string(sb))
+
+	fmt.Println("--------------------------------------")
 }
