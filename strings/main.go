@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 func main() {
 	var s = "Ciao 🚨 - òàè+"
@@ -52,7 +55,7 @@ func main() {
 	sbx := []byte("ABCDEFGHI")
 	fmt.Printf("Len and cap of []byte init by literal string : %d - %d \n", len(sbx), cap(sbx))
 
-	toAdd := "x😀z"
+	toAdd := " -x😀z- "
 	i := 5
 	sb = append(sb[:i+len(toAdd)], sb[i:]...)
 	fmt.Println(string(sb))
@@ -63,4 +66,12 @@ func main() {
 	fmt.Println(string(sb))
 
 	fmt.Println("--------------------------------------")
+
+	fmt.Println("----Split a string to get data ----------------------------")
+	pairString := "Property=DataValue"
+	index := strings.Index(pairString, "=")
+	k, v := pairString[:index], pairString[index+1:]
+	fmt.Printf("Key: %s, Value: %s \n", k, v)
+	fmt.Println("--------------------------------------")
+
 }
