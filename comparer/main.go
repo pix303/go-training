@@ -11,20 +11,20 @@ type Person struct {
 	Name     string
 	Age      int
 	Lastname string
-	Passion  Hobby
+	Pastime  Hobby
 }
 
 func main() {
 	fmt.Println("Comparer tests")
 
-	var p1 = Person{Name: "Paolo", Age: 49, Lastname: "Carraro", Passion: Hobby{Name: "tennis", Rating: 5}}
-	var p2 = Person{Name: "Paolo", Age: 49, Lastname: "Carraro", Passion: Hobby{Name: "tennis", Rating: 5}}
+	var p1 = Person{Name: "Paolo", Age: 49, Lastname: "Carraro", Pastime: Hobby{Name: "tennis", Rating: 5}}
+	var p2 = Person{Name: "Paolo", Age: 49, Lastname: "Carraro", Pastime: Hobby{Name: "tennis", Rating: 5}}
 
 	p3 := new(Person)
 	p3.Name = "Paolo"
 	p3.Age = 49
 	p3.Lastname = "Carraro"
-	p3.Passion = Hobby{"tennis", 5}
+	p3.Pastime = Hobby{"tennis", 5}
 
 	p4 := p1
 	p5 := &p1
