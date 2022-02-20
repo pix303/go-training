@@ -44,4 +44,21 @@ func main() {
 	fmt.Printf("p4 Pointer %p - Value %v \n", &p4, p4)
 	fmt.Printf("p5 Pointer %p - Value %v \n", p5, *p5)
 
+	p1.Age = 50
+	fmt.Println("Set different age for p1")
+	fmt.Printf("Compare values p1 p2 : %v \n", p1 == p2)
+	fmt.Printf("Compare values p1 p3 : %v \n", p1 == *p3)
+	fmt.Printf("Compare values p1 p4 : %v \n", p1 == p4)
+	fmt.Printf("Compare values p1 p5 : %v \n", p1 == *p5)
+	fmt.Printf("Compare pointer p1 p2: %v \n", &p1 == &p2)
+	fmt.Printf("Compare pointer p1 p3: %v \n", &p1 == p3)
+	fmt.Printf("Compare pointer p1 p4: %v \n", &p1 == &p4)
+	fmt.Printf("Compare pointer p1 p5: %v \n", &p1 == p5)
+
+	fmt.Printf("p1 Pointer %p - Value %v \n", &p1, p1)
+	fmt.Printf("p2 Pointer %p - Value %v \n", &p2, p2)
+	fmt.Printf("p3 Pointer %p - Value %v \n", &p3, *p3)
+	fmt.Printf("p4 Pointer %p - Value %v \n", &p4, p4)
+	fmt.Printf("p5 Pointer %p - Value %v \n", p5, *p5)
+
 }
