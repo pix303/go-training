@@ -2,9 +2,9 @@ package main
 
 import "fmt"
 
-type Person struct{
+type Person struct {
 	Name string
-	Age int
+	Age  int
 }
 
 func main() {
@@ -22,6 +22,7 @@ func main() {
 	fmt.Println("---Set value of a struct member by value or pointer")
 
 	var f foo
+	fmt.Printf("foo pointer %p \n ", &f)
 	f.IncreaseValue()
 	fmt.Println("Current couter (value)", f.counter)
 	f.DecreaseValue()
@@ -34,22 +35,22 @@ func main() {
 	fmt.Println("")
 	fmt.Println("---Declare variable as pointer and var as value")
 	var p *int
-	fmt.Println("value of pointer",p)
+	fmt.Println("value of pointer", p)
 	var v int = 23
 	p = &v
-	fmt.Println("value of pointer after assignation of value",p,*p,v)
+	fmt.Println("value of pointer after assignation of value", p, *p, v)
 	*p = 45
-	fmt.Println("value of pointer and value after setting value by pointer",p,*p,v)
+	fmt.Println("value of pointer and value after setting value by pointer", p, *p, v)
 
 	fmt.Println("")
 	fmt.Println("---Declare struct and show same syntax using value or pointer of struct")
-	person := Person{"James",22}
-	fmt.Println("Init person",person.Name,person.Age)
+	person := Person{"James", 22}
+	fmt.Println("Init person", person.Name, person.Age)
 	personPointer := &person
-	fmt.Printf("Person pointer %p - %v\n",personPointer,personPointer)
-	fmt.Println("Init person and see by pointer",*&personPointer.Name,*&personPointer.Age)
+	fmt.Printf("Person pointer %p - %v\n", personPointer, personPointer)
+	fmt.Println("Init person and see by pointer", *&personPointer.Name, *&personPointer.Age)
 	personPointer.Age = 34
-	fmt.Println("Change age by pointer without prefix *",person.Name,person.Age)
+	fmt.Println("Change age by pointer without prefix *", person.Name, person.Age)
 }
 
 // Calc square value of a number
@@ -74,12 +75,12 @@ type CounterValue interface {
 
 func (f foo) IncreaseValue() {
 	f.counter++
-	fmt.Println("--> value and struct pointer", f, &f)
+	fmt.Printf("--> value: %v; struct pointer %p \n", f, &f)
 }
 
 func (f foo) DecreaseValue() {
 	f.counter--
-	fmt.Println("--> value and struct pointer", f, &f)
+	fmt.Printf("--> value: %v; struct pointer %p \n", f, &f)
 }
 
 type CounterPointer interface {
@@ -88,11 +89,11 @@ type CounterPointer interface {
 }
 
 func (f *foo) IncreasePointer() {
-	fmt.Println("--> struct pointer", &f)
+	fmt.Printf("--> struct pointer %p \n", f)
 	f.counter++
 }
 
 func (f *foo) DecreasePointer() {
-	fmt.Println("--> struct pointer", &f)
+	fmt.Printf("--> struct pointer %p \n", f)
 	f.counter--
 }
