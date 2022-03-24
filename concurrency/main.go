@@ -62,27 +62,25 @@ func main() {
 	go func() {
 		FakeTask2()
 		doneChannel <- "b"
-
 	}()
 
 	go func() {
 		FakeTask3()
 		doneChannel <- "c"
-
 	}()
 
 	go func() {
 		FakeTask4()
 		doneChannel <- "d"
-
 	}()
 
 	var msg string
+	var totalMsg string
 	for {
 		msg = <-doneChannel
-		fmt.Println(msg)
-		if msg == "c" {
-			fmt.Println()
+		totalMsg += msg
+		if len(totalMsg) == 4 {
+			fmt.Println(totalMsg)
 			break
 		}
 	}
@@ -92,7 +90,7 @@ func main() {
 
 // Fake task that take some amount of time
 func FakeTask1() {
-	time.Sleep(100 * time.Millisecond)
+	time.Sleep(300 * time.Millisecond)
 	fmt.Println("Task 1 terminated")
 }
 
@@ -101,11 +99,11 @@ func FakeTask2() {
 }
 
 func FakeTask3() {
-	time.Sleep(150 * time.Millisecond)
+	time.Sleep(300 * time.Millisecond)
 	fmt.Println("Task 3 terminated")
 }
 
 func FakeTask4() {
-	time.Sleep(100 * time.Millisecond)
+	time.Sleep(300 * time.Millisecond)
 	fmt.Println("Task 4 terminated")
 }
