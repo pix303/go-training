@@ -8,6 +8,7 @@ import (
 
 	"github.com/pix303/go-training/go-chat/trace"
 	"github.com/stretchr/gomniauth"
+	"github.com/stretchr/gomniauth/oauth2"
 	"github.com/stretchr/objx"
 )
 
@@ -56,7 +57,8 @@ func LoginHandler(rw http.ResponseWriter, r *http.Request) {
 			http.Error(rw, fmt.Sprintf("Error on get provider for %s: %s", provider, err.Error()), http.StatusBadRequest)
 		}
 		// get url for redirect to provider for login
-		loginURL, err := authProvider.GetBeginAuthURL(nil, nil)
+		options := objx.New(map[string]interface{}{oauth2.OAuth2KeyScope: "https://www.googleapis.com/auth/contacts.readonly https://www.googleapis.com/auth/user.addresses.read"})
+		loginURL, err := authProvider.GetBeginAuthURL(nil, options)
 		if err != nil {
 			http.Error(rw, fmt.Sprintf("Error on get url from provider: %s", err.Error()), http.StatusInternalServerError)
 		}
@@ -77,6 +79,9 @@ func LoginHandler(rw http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			http.Error(rw, fmt.Sprintf("Error on get user from creds %s: %s", provider, err.Error()), http.StatusInternalServerError)
 		}
+
+		trk.Trace("creds")
+		trk.Trace(creds)
 
 		candidateName := "Mona"
 		if user != nil {
