@@ -1,2 +1,2 @@
 go build -o chatapp
-./chatapp -host=":5000"
+./chatapp -host=":8080"
