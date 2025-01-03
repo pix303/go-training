@@ -1,0 +1,12 @@
+[
+	{
+		"name": "Alphaville",
+		"live": false,
+		"members": 1
+	},
+	{
+		"name": "Aerosmiths",
+		"live": true,
+		"members": 15
+	}
+]
