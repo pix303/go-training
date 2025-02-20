@@ -119,13 +119,20 @@ func routinePub(c chan string) {
 	c <- "v"
 	c <- "a"
 	c <- "?"
+	c <- "?"
+	c <- "?"
+	c <- "?"
+	c <- "?"
+	c <- "?"
+	c <- "?"
 }
 
 func routineSub(c chan string) {
-	for {
-		letters := <-c
+	for m := range c {
+		letters := m
 		fmt.Print(letters)
 	}
+	fmt.Println("end of routine sub")
 }
 
 func main() {
