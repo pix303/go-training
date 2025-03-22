@@ -68,31 +68,58 @@ func NewItemTwoStoreItem(code, typ string) StoreItem {
 }
 
 func main() {
+
+	// s := ItemOne{"ciao", "mona"}
+	// itemValue := reflect.ValueOf(s)
+	// itemType := reflect.TypeOf(s)
+	// fmt.Println(itemValue)
+	// fmt.Printf("%v\n", s)
+	// fmt.Println(itemType)
+	// sp := &s
+	// itemValue = reflect.ValueOf(sp)
+	// itemType = reflect.TypeOf(s)
+	// fmt.Printf("%v\n", itemValue.Addr())
+	// fmt.Printf("%p\n", sp)
+	// fmt.Println(itemType)
+
 	storeItems := []StoreItem{}
 
 	storeItems = append(storeItems, NewItemOneStoreItem("paul", "newman"))
 	storeItems = append(storeItems, NewItemTwoStoreItem("ABC", "Prod"))
 
 	item := storeItems[0]
-	itemSer := DecodeItem(item)
-	itemone, err := castAs[ItemOne](itemSer)
-
-	if err != nil {
-		fmt.Printf("errore nel cast %v\r", err)
-		return
-	}
+	itemone, _ := DecodeItem[ItemOne](item)
 	fmt.Println(itemone)
 
 	item = storeItems[1]
-	itemSer = DecodeItem(item)
-	itemtwo, err := castAs[ItemTwo](itemSer)
-	if err != nil {
-		fmt.Printf("errore nel cast %v\r", err)
-	}
+	itemtwo, _ := DecodeItem[ItemTwo](item)
 	fmt.Println(itemtwo)
 }
 
-func DecodeItem(item StoreItem) Serializable {
+func DecodeItem[T any](item StoreItem) (T, bool) {
+	var target T
+	if item.DataType == "i1" {
+		var i1 Serializable = &ItemOne{}
+		i1.Decode(item.DataSerialized)
+		if result, ok := i1.(T); ok {
+			fmt.Println(result)
+			return result, true
+		}
+		return target, false
+	}
+	if item.DataType == "i2" {
+		var i2 Serializable = &ItemTwo{}
+		i2.Decode(item.DataSerialized)
+		if result, ok := i2.(T); ok {
+			return result, true
+		}
+		return target, false
+	}
+
+	return target, false
+}
+
+func xDecodeItem(item StoreItem) Serializable {
 
 	if item.DataType == "i1" {
 		var i1 ItemOne
@@ -108,7 +135,30 @@ func DecodeItem(item StoreItem) Serializable {
 	return nil
 }
 
-func castAs[T any](item Serializable) (T, error) {
+func castAs[T any](item Serializable) (T, bool) {
+	var target T
+
+	if item == nil {
+		return target, false
+	}
+
+	result, ok := item.(T)
+	if ok {
+		return result, ok
+	}
+
+	// pointerTest := reflect.ValueOf(item)
+	// if pointerTest.Kind() == reflect.Ptr {
+	// 	value := &item
+	// 	result, ok := value.(T)
+	// 	if ok {
+	// 		return result, ok
+	// 	}
+	// }
+	return target, false
+}
+
+func xcastAs[T any](item Serializable) (T, error) {
 	var target T
 
 	if item == nil {
